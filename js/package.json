@@ -1,0 +1,14 @@
+{
+  "name": "kafka-libs-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "kafka-consumer-manager": "^2.0.2",
+    "kafka-node": "^2.6.1",
+    "sleep-promise": "^2.0.0",
+    "uuid": "^3.1.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
