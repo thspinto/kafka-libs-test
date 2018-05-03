@@ -4,8 +4,18 @@ const kafka = require('kafka-node');
 let producer;
 
 function init() {
-  const client = new kafka.KafkaClient({ kafkaHost: 'kb1.local.thsp.tech:19092,kb2.local.thsp.tech:29092,kb3.local.thsp.tech:39092' });
-  producer = new kafka.HighLevelProducer(client, { requireAcks: 1 });
+  const client = new kafka.KafkaClient(
+    {
+      kafkaHost: 'kb1.local.thsp.tech:19092,kb2.local.thsp.tech:29092,kb3.local.thsp.tech:39092',
+      connectRetryOptions: {
+        retries: 3,
+        factor: 0,
+        minTimeout: 1000,
+        maxTimeout: 1000,
+        randomize: true
+      }
+    });
+  producer = new kafka.HighLevelProducer(client, { requireAcks: 1 } );
   const timeout = 10000
 
   const successPromise = new Promise((resolve) => {
@@ -48,5 +58,5 @@ function send(message, topic) {
 }
 
 init().then(() => {
-  setInterval(send, 2000, 'funky', 'TestTopic');
+  setInterval(send, 10000, 'funky', 'TestTopic');
 });
